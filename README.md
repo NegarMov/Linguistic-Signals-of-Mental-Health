@@ -44,8 +44,10 @@ A BERT model is used as the encoder, followed by a linear classification layer o
 &emsp;&emsp;↓<br>
 `Linear Classification Head (768 → 7)`
 
-
 To demonstrate the effect of fine-tuning, PCA visualizations of the test set embeddings are provided. As observed, embeddings of statements belonging to the same class become more localized, and class separation becomes more distinct after fine-tuning.
+<p align="center">
+  <img src="https://github.com/NegarMov/Linguistic-Signals-of-Mental-Health/blob/main/assets/embeddings.png" alt="confusion matrix" width="700"/>
+</p>
 
 ## Training and Evaluation
 The model is trained for 15 epochs using AdamW optimizer and balanced CrossEntropy loss, and is evaluated on a held-out test set.
@@ -64,8 +66,14 @@ Loss: 0.5883 | Accuracy: 80.95% | Macro-F1: 79.46% | Weighted-F1: 81.27%
 | Suicidal             | 0.709     | 0.741  | 0.725    | 533     |
 
 ### Confusion Matrix
+<p align="center">
+  <img src="https://github.com/NegarMov/Linguistic-Signals-of-Mental-Health/blob/main/assets/confusion-matrix.png" alt="confusion matrix" width="500"/>
+</p>
 
 ### Key Observations
 1. The relatively small gap between Macro F1 and Weighted F1 scores suggests that performance is not dominated by the majority class, indicating that class imbalance has been largely mitigated.
-2. Depression and Suicidal classes are frequently confused due to shared vocabulary and emotional tone, which is also clearly evident from their word clouds.
+2. Depression and Suicidal classes are frequently confused due to shared vocabulary and emotional tone, which is also clearly reflected in their word clouds when compared to more distinct classes such as Personality Disorder.
+
+  ![Depression](https://github.com/NegarMov/Linguistic-Signals-of-Mental-Health/blob/main/assets/wc-depression.png)  ![Suicidal](https://github.com/NegarMov/Linguistic-Signals-of-Mental-Health/blob/main/assets/wc-suicidal.png) ![PD](https://github.com/NegarMov/Linguistic-Signals-of-Mental-Health/blob/main/assets/wc-pd.png)
+
 3. Personality Disorder, the smallest minority class, exhibits lower precision due to limited data. However, its recall score is strong, indicating that the model still successfully learns to recognize minority-class samples and is sensitive to at-risk language.
