@@ -1,7 +1,7 @@
 <h1 align="center">Linguistic Signals of Mental Health</h1>
 
 Mental health conditions affect 1 in 8 people globally. Yet, despite its significance, early detection remains challenging.
-This repository implements a BERT-based NLP model to infer users’ mental health conditions from their online posts and achieves an accuracy of 80.95% across seven mental health classes.
+This repository implements a BERT-based NLP model to infer users’ mental health conditions from their online posts and achieves an **accuracy of 80.95%** across **seven mental health classes**.
 
 ## Dataset
 
@@ -17,23 +17,23 @@ Each statement of the dataset is labeled with one of these seven mental health c
 | Anxiety             | 3,841            |
 | Bipolar             | 2,777            |
 | Stress              | 2,587            |
-| **Personality disorder** | **1,077**   |
+| Personality Disorder | **1,077**   |
 
 The severe imbalance in this dataset poses a major challenge. To address this issue, both downsampling and upsampling strategies were applied after the train/validation/test split.
 
 ### Downsampling on Majority Classes
-KNN applied to TF–IDF representations were used to select representative samples
+**KNN** applied to **TF–IDF representations** were used to select representative samples
 
 ### Upsampling (Augmentation) on Minority Classes
 Minority classes were augmented using text-level strategies, including:
-  * mixing chunks of texts from the same class
-  * shuffling sentences within a post
-  * randomly dropping sentences
+  * **mixing** chunks of texts from the same class
+  * **shuffling** sentences within a post
+  * randomly **dropping** sentences
 
 This resulted in a total of 23,724 balanced training samples.
 
 ## Text Preprocessing
-Tokenization is performed using a BERT tokenizer. Due to long post lengths, each input consists of **the first 128 tokens (introduction) and the last 128 tokens (conclusion)** to preserve both the contextual setup and the concluding content of each post.
+Tokenization is performed using a BERT tokenizer. Due to long post lengths, each input consists of the **first 128 tokens (introduction)** and the **last 128 tokens (conclusion)** to preserve both the contextual setup and the concluding content of each post.
 
 ## Model Architecture
 A BERT model is used as the encoder, followed by a linear classification layer operating on the BERT [CLS] token embedding. The first seven BERT layers are frozen, while the remaining layers are fine-tuned.
@@ -44,13 +44,13 @@ A BERT model is used as the encoder, followed by a linear classification layer o
 &emsp;&emsp;↓<br>
 `Linear Classification Head (768 → 7)`
 
-To demonstrate the effect of fine-tuning, PCA visualizations of the test set embeddings are provided. As observed, embeddings of statements belonging to the same class become more localized, and class separation becomes more distinct after fine-tuning.
+To demonstrate the effect of fine-tuning, PCA visualizations of the test set [CLS] embeddings are provided. As observed, embeddings of statements belonging to the same class become more localized, and class separation becomes more distinct after fine-tuning.
 <p align="center">
   <img src="https://github.com/NegarMov/Linguistic-Signals-of-Mental-Health/blob/main/assets/embeddings.png" alt="confusion matrix" width="700"/>
 </p>
 
 ## Training and Evaluation
-The model is trained for 15 epochs using AdamW optimizer and balanced CrossEntropy loss, and is evaluated on a held-out test set.
+The model is trained for **15 epochs** using **AdamW** optimizer and **balanced CrossEntropy** loss, and is evaluated on a held-out test set using the model that achieved the highest performance on the validation dataset.
 
 ### Test Performance
 Loss: 0.5883 | Accuracy: 80.95% | Macro-F1: 79.46% | Weighted-F1: 81.27%
